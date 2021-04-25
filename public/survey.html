@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b43e010bf1.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <title>Car Finder Survey</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Survey Questions</h1>
+        <hr>
+        <h2>About You</h2>
+        <form>
+            <div class="form-group">
+                <label for="formGroupExampleInput">Name (Required)</label>
+                <input type="text" class="form-control" id="name" placeholder="First Last" required>
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Photo of your current car (Required)</label>
+                <input type="text" class="form-control" id="photoLink" placeholder="mydrive/photo.png" required>
+            </div>
+            <hr>
+
+            <h3>Question 1</h3>
+            <h4>You wanna go fast?</h4>
+            <select class="chosen-select" id="q1" required>
+                <option value="">Choose...</option>
+                <option value="1">1 (Nope!)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Heck Yeah!)</option>
+            </select>
+            <br>
+            <br>
+            <h3>Question 2</h3>
+            <h4>You wanna go offroad?</h4>
+            <select class="chosen-select" id="q2" required>
+                <option value="">Choose...</option>
+                <option value="1">1 (Nope!)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Heck Yeah!)</option>
+            </select>
+            <br>
+            <br>
+            <h3>Question 3</h3>
+            <h4>You wanna haul stuff?</h4>
+            <select class="chosen-select" id="q3" required>
+                <option value="">Choose...</option>
+                <option value="1">1 (Nope!)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Heck Yeah!)</option>
+            </select>
+            <br>
+            <br>
+            <h3>Question 4</h3>
+            <h4>You wanna look good?</h4>
+            <select class="chosen-select" id="q4" required>
+                <option value="">Choose...</option>
+                <option value="1">1 (Nope!)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Heck Yeah!)</option>
+            </select>
+            <br>
+            <br>
+            <h3>Question 5</h3>
+            <h4>You have more than one friend?</h4>
+            <select class="chosen-select" id="q5" required>
+                <option value="">Choose...</option>
+                <option value="1">1 (Nope!)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Heck Yeah!)</option>
+            </select>
+            <br>
+            <br>
+            
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary" id="submit"><i class="fas fa-check"></i> Submit</button>
+            <hr>
+
+
+
+        </form>
+    </div>
+    <div>
+
+
+    <footer class="footer">
+        <div class="container">
+            <p><a href="/api/friends">API Car List</a> | <a
+                    href="">GitHub Repo</a></p>
+        </div>
+
+    </footer>
+    
+</body>
+</html>
+
+<script type="text/javascript">
+
+    $("#submit").on("click", function(event) {
+        event.preventDefault();
+
+        var newUser = {
+            name: $("#name").val().trim(),
+            photo: $("#photoLink").val().trim(),
+            scores: [
+                $("#q1").val(),
+                $("#q2").val(),
+                $("#q3").val(),
+                $("#q4").val(),
+                $("#q5").val()
+            ]
+        };
+        console.log(newUser);
+
+        $.post("/api/usercars", newUser)
+            .then(function(data) {
+                console.log("survey.html", data);
+                alert("Adding new user...");
+            });
+
+            $("#name").val(""),
+            $("#photoLink").val(""),
+            $("#q1").val(""),
+            $("#q2").val(""),
+            $("#q3").val(""),
+            $("#q4").val(""),
+            $("#q5").val("")
+
+    })
+
+
+</script>
